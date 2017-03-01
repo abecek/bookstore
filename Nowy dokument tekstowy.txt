@@ -1,0 +1,35 @@
+UPDATE `osoby` SET `id_adresu` = '1' WHERE `osoby`.`id` = 1;
+INSERT INTO `adres` (`id`, `ulica`, `nr_domu`, `nr_lokalu`, `kod_poczt`, `miejscowosc`, `imie`, `nazwisko`) VALUES ('1', 'Targowa', '3', '33', '95100', 'Zgierz', 'Micha³', 'B³aszczyk')
+
+UPDATE `osoby` SET `id_adresu` = '2' WHERE `osoby`.`id` = 2;
+INSERT INTO `adres` (`id`, `ulica`, `nr_domu`, `nr_lokalu`, `kod_poczt`, `miejscowosc`, `imie`, `nazwisko`) VALUES ('2', 'Ossowskiego', '18', '', '95100', 'Zgierz', 'Micha³', 'B³aszczyk')
+
+create table opinie	(
+id int(11) primary key,
+id_book int(11) not null,
+id_user int(11) not null,
+ocena int(1) not null,
+tekst varchar(400)
+);
+
+CREATE TABLE `user_rating` (
+  `id` int(11),
+  `id_osoby` int(11) NOT NULL,
+  `id_ksiazki` int(11) NOT NULL,
+  `ocena` tinyint(1) NOT NULL,
+  `komentarz` varchar(255) COLLATE utf8_polish_ci DEFAULT NULL,
+  `czas` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+ALTER TABLE `user_rating`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_ksiazki` (`id_ksiazki`);
+  
+ALTER TABLE `user_rating`
+  ADD CONSTRAINT `user_rating_ibfk_1` FOREIGN KEY (`id_osoby`) REFERENCES `osoby` (`id`),
+  ADD CONSTRAINT `user_rating_ibfk_2` FOREIGN KEY (`id_ksiazki`) REFERENCES `ksiazki` (`id`);
+  
+ ALTER TABLE `user_rating`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  
+  insert into user_rating(id_osoby,id_ksiazki,ocena,komentarz) values(2,3,5,'pierwszy')
